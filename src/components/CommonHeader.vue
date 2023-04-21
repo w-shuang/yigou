@@ -24,7 +24,7 @@
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>个人中心</el-dropdown-item>
-          <el-dropdown-item>退出</el-dropdown-item>
+          <el-dropdown-item @click.native="logout">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import Cookie from 'js-cookie';
 import { mapMutations, mapState } from "vuex";
 export default {
   data() {
@@ -42,12 +43,17 @@ export default {
     //     this.$store.commit('COLLAPSE_MENU')
     // }
     ...mapMutations("tab", { handlerMenu: "COLLAPSE_MENU" }),
+    logout() {
+      Cookie.remove('token')
+      Cookie.remove('menu')
+      this.$router.push('/login')
+    }
   },
   computed: {
     ...mapState("tab", ["tabsList"]),
   },
   mounted() {
-    console.log(this.tabsList);
+    // console.log(this.tabsList);
   },
 };
 </script>
